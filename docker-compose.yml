@@ -1,0 +1,27 @@
+version: "3"
+services:
+  db:
+    image: mysql:5.7
+    restart: always
+    env_file: .env
+    environment:
+      MYSQL_DATABASE: ${DATABASE_DB}
+      MYSQL_USER: ${DATABASE_USER}
+      MYSQL_PASSWORD: ${DATABASE_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
+    ports:
+      # <Port exposed> : <MySQL Port running inside container>
+      - '${DATABASE_PORT}:3306'
+    expose:
+      # Opens port 3306 on the container
+      - '3306'
+      # Where our data will be persisted
+    volumes:
+      - my-db:/var/lib/mysql
+# Names our volume
+volumes:
+  my-db:
+
+    # Documentação usada para a construção desse arquivo
+    # https://www.digitalocean.com/community/tutorials/containerizing-a-node-js-application-for-development-with-docker-compose-pt
+    # (principalmente o passo 4)
